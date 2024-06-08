@@ -2,27 +2,27 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 
-class Buyer(Base):
-    __tablename__ = "buyers"
+class Comprador(Base):
+    __tablename__ = "compradores"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
+    nome = Column(String, index=True)
 
 class Item(Base):
-    __tablename__ = "items"
+    __tablename__ = "itens"
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, index=True)
-    description = Column(String, index=True)
-    start_bid = Column(Float)
-    end_time = Column(DateTime)
-    highest_bid = Column(Float, default=0.0)
-    highest_bidder_id = Column(Integer, ForeignKey('buyers.id'), nullable=True)
-    highest_bidder = relationship("Buyer")
+    nome = Column(String, index=True)
+    descricao = Column(String, index=True)
+    lance_inicial = Column(Float)
+    tempo_final = Column(DateTime)
+    maior_lance = Column(Float, default=0.0)
+    id_maior_lance = Column(Integer, ForeignKey('compradores.id'), nullable=True)
+    maior_lance_comprador = relationship("Comprador")
 
-class Bid(Base):
-    __tablename__ = "bids"
+class Lance(Base):
+    __tablename__ = "lances"
     id = Column(Integer, primary_key=True, index=True)
-    amount = Column(Float)
-    item_id = Column(Integer, ForeignKey('items.id'))
-    buyer_id = Column(Integer, ForeignKey('buyers.id'))
+    valor = Column(Float)
+    id_item = Column(Integer, ForeignKey('itens.id'))
+    id_comprador = Column(Integer, ForeignKey('compradores.id'))
     item = relationship("Item")
-    buyer = relationship("Buyer")
+    comprador = relationship("Comprador")
