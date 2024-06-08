@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: Auction API
+  version: 1.0.0
+paths:
+  /buyers/:
+    post:
+      summary: Create a new buyer
+      operationId: create_buyer_buyers__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuyerCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Buyer'
+  /items/:
+    post:
+      summary: Create a new item
+      operationId: create_item_items__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+    get:
+      summary: Get all items
+      operationId: read_items_items__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+  /bids/:
+    post:
+      summary: Create a new bid
+      operationId: create_bid_bids__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BidCreate'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bid'
+components:
+  schemas:
+    BuyerCreate:
+      title: BuyerCreate
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+    Buyer:
+      title: Buyer
+      required:
+        - id
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    ItemCreate:
+      title: ItemCreate
+      required:
+        - name
+        - description
+        - start_bid
+        - end_time
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        start_bid:
+          type: number
+          format: float
+        end_time:
+          type: string
+          format: date-time
+    Item:
+      title: Item
+      required:
+        - id
+        - name
+        - description
+        - start_bid
+        - end_time
+        - highest_bid
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        start_bid:
+          type: number
+          format: float
+        end_time:
+          type: string
+          format: date-time
+        highest_bid:
+          type: number
+          format: float
+        highest_bidder_id:
+          type: integer
+          nullable: true
+    BidCreate:
+      title: BidCreate
+      required:
+        - amount
+        - item_id
+        - buyer_id
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+        item_id:
+          type: integer
+        buyer_id:
+          type: integer
+    Bid:
+      title: Bid
+      required:
+        - id
+        - amount
+        - item_id
+        - buyer_id
+      type: object
+      properties:
+        id:
+          type: integer
+        amount:
+          type: number
+          format: float
+        item_id:
+          type: integer
+        buyer_id:
+          type: integer
