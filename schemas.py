@@ -2,44 +2,44 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
-class BuyerBase(BaseModel):
-    name: str
+class CompradorBase(BaseModel):
+    nome: str
 
-class BuyerCreate(BuyerBase):
+class CompradorCreate(CompradorBase):
     pass
 
-class Buyer(BuyerBase):
+class CompradorSchema(CompradorBase):
     id: int
 
     class Config:
         orm_mode = True
 
 class ItemBase(BaseModel):
-    name: str
-    description: str
-    start_bid: float
-    end_time: datetime
+    nome: str
+    descricao: str
+    lance_inicial: float
+    data_termino: datetime
 
 class ItemCreate(ItemBase):
     pass
 
-class Item(ItemBase):
+class ItemSchema(ItemBase):
     id: int
-    highest_bid: float
-    highest_bidder_id: Optional[int] = None
+    maior_lance: float
+    id_maior_lance: Optional[int] = None
 
     class Config:
         orm_mode = True
 
-class BidBase(BaseModel):
-    amount: float
-    item_id: int
-    buyer_id: int
+class LanceBase(BaseModel):
+    valor: float
+    id_item: int
+    id_comprador: int
 
-class BidCreate(BidBase):
+class LanceCreate(LanceBase):
     pass
 
-class Bid(BidBase):
+class LanceSchema(LanceBase):
     id: int
 
     class Config:
